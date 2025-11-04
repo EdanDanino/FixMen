@@ -7,12 +7,18 @@ export function GalleryItem({ project, currentImageIndex, onNext, onPrev }) {
     <div
       className="card-item relative overflow-hidden rounded-xl shadow-lg bg-white border-2"
       style={{ borderColor: COLORS.gold }}
+      role="article"
+      aria-label={`${project.title} - ${project.description}`}
     >
       {/* Image Container with Navigation */}
       <div className="relative w-full pt-[75%] bg-gradient-to-br from-slate-200 to-slate-300 overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center p-6">
-            <div className="text-6xl mb-4" style={{ color: COLORS.goldDark }}>
+            <div
+              className="text-6xl mb-4"
+              style={{ color: COLORS.goldDark }}
+              aria-hidden="true"
+            >
               🏗️
             </div>
             <p className="text-sm text-gray-500">
@@ -26,7 +32,7 @@ export function GalleryItem({ project, currentImageIndex, onNext, onPrev }) {
           <>
             <button
               onClick={onPrev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 z-10"
+              className="absolute left-2 top-1/2 -translate-y-1/2 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 z-10 whitespace-nowrap"
               style={{ backgroundColor: COLORS.goldDark }}
               onMouseEnter={(e) =>
                 (e.currentTarget.style.backgroundColor = COLORS.black)
@@ -34,12 +40,13 @@ export function GalleryItem({ project, currentImageIndex, onNext, onPrev }) {
               onMouseLeave={(e) =>
                 (e.currentTarget.style.backgroundColor = COLORS.goldDark)
               }
+              aria-label="תמונה קודמת"
             >
               ←
             </button>
             <button
               onClick={onNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 z-10"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 z-10 whitespace-nowrap"
               style={{ backgroundColor: COLORS.goldDark }}
               onMouseEnter={(e) =>
                 (e.currentTarget.style.backgroundColor = COLORS.black)
@@ -47,12 +54,19 @@ export function GalleryItem({ project, currentImageIndex, onNext, onPrev }) {
               onMouseLeave={(e) =>
                 (e.currentTarget.style.backgroundColor = COLORS.goldDark)
               }
+              aria-label="תמונה הבאה"
             >
               →
             </button>
 
             {/* Image Indicators */}
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+            <div
+              className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-10"
+              role="status"
+              aria-label={`תמונה ${currentImageIndex + 1} מתוך ${
+                project.images.length
+              }`}
+            >
               {project.images.map((_, imgIdx) => (
                 <div
                   key={imgIdx}
@@ -63,6 +77,7 @@ export function GalleryItem({ project, currentImageIndex, onNext, onPrev }) {
                         ? COLORS.gold
                         : "rgba(255,255,255,0.5)",
                   }}
+                  aria-hidden="true"
                 />
               ))}
             </div>

@@ -8,26 +8,42 @@ export function Services() {
           {SERVICES.title}
         </h2>
 
-        {/* Horizontal scroll container */}
-        <div className="overflow-x-auto scrollbar-hide">
-          <div className="flex gap-6 pb-4" style={{ minWidth: "min-content" }}>
-            {SERVICES.items.map((service, index) => (
-              <div
-                key={index}
-                className="card-item bg-slate-50 rounded-xl p-6 hover:shadow-lg transition border-2 border-transparent flex-shrink-0 w-80"
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.borderColor = COLORS.gold)
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.borderColor = "transparent")
-                }
-              >
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-gray-700">{service.description}</p>
-              </div>
-            ))}
+        {/* Horizontal scroll container with shadow indicators */}
+        <div className="relative scroll-container">
+          <div className="scroll-shadow-right"></div>
+          <div
+            className="overflow-x-auto scrollbar-hide scroll-content"
+            role="region"
+            aria-label="השירותים שלנו"
+            tabIndex="0"
+          >
+            <div
+              className="flex gap-6 pb-4"
+              style={{ minWidth: "min-content" }}
+            >
+              {SERVICES.items.map((service, index) => (
+                <div
+                  key={index}
+                  className="card-item bg-slate-50 rounded-xl p-6 hover:shadow-lg transition border-2 border-transparent flex-shrink-0 w-80"
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.borderColor = COLORS.gold)
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.borderColor = "transparent")
+                  }
+                  role="article"
+                  aria-labelledby={`service-title-${index}`}
+                >
+                  <h3
+                    id={`service-title-${index}`}
+                    className="text-xl font-bold text-gray-900 mb-3"
+                  >
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-700">{service.description}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -39,6 +55,45 @@ export function Services() {
         .scrollbar-hide {
           -ms-overflow-style: none;
           scrollbar-width: none;
+        }
+
+        .scroll-container {
+          position: relative;
+        }
+
+        .scroll-shadow-right {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          width: 60px;
+          background: linear-gradient(
+            to left,
+            rgba(255, 255, 255, 1),
+            rgba(255, 255, 255, 0)
+          );
+          pointer-events: none;
+          z-index: 10;
+          opacity: 1;
+          transition: opacity 0.3s ease;
+        }
+
+        .scroll-content::-webkit-scrollbar {
+          display: none;
+        }
+
+        @keyframes scrollHint {
+          0%,
+          100% {
+            transform: translateX(0);
+          }
+          50% {
+            transform: translateX(-10px);
+          }
+        }
+
+        .scroll-content {
+          animation: scrollHint 2s ease-in-out 1;
         }
       `}</style>
     </section>

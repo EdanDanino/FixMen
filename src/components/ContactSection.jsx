@@ -17,7 +17,7 @@ export function ContactSection() {
         <div className="flex flex-col md:flex-row gap-4 justify-center items-center flex-wrap">
           <a
             href={`tel:${CONTACT.phone}`}
-            className="text-gray-900 px-8 py-4 rounded-lg transition font-bold text-lg"
+            className="text-gray-900 px-8 py-4 rounded-lg transition font-bold text-lg whitespace-nowrap"
             style={{ backgroundColor: COLORS.gold }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = COLORS.goldDark;
@@ -25,12 +25,13 @@ export function ContactSection() {
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = COLORS.gold;
             }}
+            aria-label={`התקשר למספר ${CONTACT.phone}`}
           >
             {CONTACT_SECTION.buttons.phone} {CONTACT.phone}
           </a>
           <a
             href={`tel:${CONTACT.phone2}`}
-            className="text-gray-900 px-8 py-4 rounded-lg transition font-bold text-lg"
+            className="text-gray-900 px-8 py-4 rounded-lg transition font-bold text-lg whitespace-nowrap"
             style={{ backgroundColor: COLORS.gold }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = COLORS.goldDark;
@@ -38,6 +39,7 @@ export function ContactSection() {
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = COLORS.gold;
             }}
+            aria-label={`התקשר למספר ${CONTACT.phone2}`}
           >
             {CONTACT_SECTION.buttons.phone} {CONTACT.phone2}
           </a>
@@ -45,13 +47,14 @@ export function ContactSection() {
             href={`https://wa.me/${CONTACT.whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-green-500 text-white px-8 py-4 rounded-lg hover:bg-green-600 transition font-bold text-lg"
+            className="bg-green-500 text-white px-8 py-4 rounded-lg hover:bg-green-600 transition font-bold text-lg whitespace-nowrap"
+            aria-label="פתח שיחה בווטסאפ"
           >
             {CONTACT_SECTION.buttons.whatsapp}
           </a>
           <a
             href={`mailto:${CONTACT.email}`}
-            className="text-gray-900 px-8 py-4 rounded-lg transition font-bold text-lg"
+            className="text-gray-900 px-8 py-4 rounded-lg transition font-bold text-lg whitespace-nowrap"
             style={{ backgroundColor: COLORS.gold }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = COLORS.goldDark;
@@ -59,6 +62,7 @@ export function ContactSection() {
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = COLORS.gold;
             }}
+            aria-label={`שלח אימייל ל ${CONTACT.email}`}
           >
             {CONTACT_SECTION.buttons.email} {CONTACT.email}
           </a>
