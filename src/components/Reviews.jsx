@@ -1,12 +1,24 @@
 import { REVIEWS, COLORS } from "../constants";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function Reviews() {
   const scrollRef = useRef(null);
+  const shadowRef = useRef(null);
+  const [hasOverflow, setHasOverflow] = useState(false);
 
   useEffect(() => {
     const scrollContainer = scrollRef.current;
+    const shadowElement = shadowRef.current;
     if (!scrollContainer) return;
+
+    const checkOverflow = () => {
+      const hasScroll =
+        scrollContainer.scrollWidth > scrollContainer.clientWidth;
+      setHasOverflow(hasScroll);
+      if (shadowElement) {
+        shadowElement.style.opacity = hasScroll ? "1" : "0";
+      }
+    };
 
     const handleWheel = (e) => {
       if (e.deltaY !== 0) {
@@ -15,9 +27,23 @@ export function Reviews() {
       }
     };
 
+    const handleScroll = () => {
+      if (!shadowElement) return;
+      const isAtStart = scrollContainer.scrollLeft <= 10;
+      shadowElement.style.opacity = hasOverflow && !isAtStart ? "1" : "0";
+    };
+
+    checkOverflow();
+    window.addEventListener("resize", checkOverflow);
     scrollContainer.addEventListener("wheel", handleWheel, { passive: false });
-    return () => scrollContainer.removeEventListener("wheel", handleWheel);
-  }, []);
+    scrollContainer.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("resize", checkOverflow);
+      scrollContainer.removeEventListener("wheel", handleWheel);
+      scrollContainer.removeEventListener("scroll", handleScroll);
+    };
+  }, [hasOverflow]);
 
   return (
     <section id="reviews" className="py-16 md:py-24 bg-white scroll-reveal">
@@ -31,7 +57,7 @@ export function Reviews() {
 
         {/* Horizontal scroll container with shadow indicators */}
         <div className="relative scroll-container">
-          <div className="scroll-shadow-right"></div>
+          <div ref={shadowRef} className="scroll-shadow-left"></div>
           <div
             ref={scrollRef}
             className="overflow-x-auto scrollbar-hide scroll-content"
@@ -114,21 +140,21 @@ export function Reviews() {
           position: relative;
         }
 
-        .scroll-shadow-right {
+        .scroll-shadow-left {
           position: absolute;
           top: 0;
-          right: 0;
+          left: 0;
           bottom: 0;
           width: 80px;
           background: linear-gradient(
-            to left,
+            to right,
             rgba(255, 255, 255, 0.95) 0%,
             rgba(255, 255, 255, 0.7) 30%,
             rgba(255, 255, 255, 0) 100%
           );
           pointer-events: none;
           z-index: 10;
-          opacity: 1;
+          opacity: 0;
           transition: opacity 0.3s ease;
         }
 
