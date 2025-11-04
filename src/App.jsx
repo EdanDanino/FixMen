@@ -16,7 +16,6 @@ import {
 import { GALLERY } from "./constants";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState(1);
   const [showSideNav, setShowSideNav] = useState(false);
   const [galleryImageIndex, setGalleryImageIndex] = useState({});
 
@@ -71,7 +70,7 @@ function App() {
       observer.disconnect();
       cardObserver.disconnect();
     };
-  }, [currentPage]);
+  }, []);
 
   // Track scroll position for side nav
   useEffect(() => {
@@ -90,17 +89,6 @@ function App() {
     const element = document.querySelector(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
-  // Change page and scroll to gallery top
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-    const gallerySection = document.querySelector("#gallery");
-    if (gallerySection) {
-      setTimeout(() => {
-        gallerySection.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 100);
     }
   };
 
@@ -183,8 +171,6 @@ function App() {
       <Hero />
       <Services />
       <Gallery
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
         galleryImageIndex={galleryImageIndex}
         onGalleryNext={handleGalleryNext}
         onGalleryPrev={handleGalleryPrev}
