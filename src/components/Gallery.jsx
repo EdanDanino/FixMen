@@ -1,7 +1,25 @@
 import { GALLERY } from "../constants";
 import { GalleryItem } from "./GalleryItem";
+import { useEffect, useRef } from "react";
 
 export function Gallery({ galleryImageIndex, onGalleryNext, onGalleryPrev }) {
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    const handleWheel = (e) => {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        scrollContainer.scrollLeft += e.deltaY;
+      }
+    };
+
+    scrollContainer.addEventListener("wheel", handleWheel, { passive: false });
+    return () => scrollContainer.removeEventListener("wheel", handleWheel);
+  }, []);
+
   return (
     <section
       id="gallery"
@@ -19,6 +37,7 @@ export function Gallery({ galleryImageIndex, onGalleryNext, onGalleryPrev }) {
         <div className="relative scroll-container">
           <div className="scroll-shadow-right"></div>
           <div
+            ref={scrollRef}
             className="overflow-x-auto scrollbar-hide scroll-content"
             role="region"
             aria-label="גלריית פרויקטים"
@@ -69,11 +88,12 @@ export function Gallery({ galleryImageIndex, onGalleryNext, onGalleryPrev }) {
           top: 0;
           right: 0;
           bottom: 0;
-          width: 60px;
+          width: 80px;
           background: linear-gradient(
             to left,
-            rgba(248, 250, 252, 1),
-            rgba(248, 250, 252, 0)
+            rgba(248, 250, 252, 0.95) 0%,
+            rgba(248, 250, 252, 0.7) 30%,
+            rgba(248, 250, 252, 0) 100%
           );
           pointer-events: none;
           z-index: 10;
@@ -81,8 +101,13 @@ export function Gallery({ galleryImageIndex, onGalleryNext, onGalleryPrev }) {
           transition: opacity 0.3s ease;
         }
 
-        .scroll-content::-webkit-scrollbar {
-          display: none;
+        .scroll-content {
+          cursor: grab;
+          scroll-behavior: smooth;
+        }
+
+        .scroll-content:active {
+          cursor: grabbing;
         }
 
         @keyframes scrollHint {

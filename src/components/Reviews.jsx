@@ -1,6 +1,24 @@
 import { REVIEWS, COLORS } from "../constants";
+import { useEffect, useRef } from "react";
 
 export function Reviews() {
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    const handleWheel = (e) => {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        scrollContainer.scrollLeft += e.deltaY;
+      }
+    };
+
+    scrollContainer.addEventListener("wheel", handleWheel, { passive: false });
+    return () => scrollContainer.removeEventListener("wheel", handleWheel);
+  }, []);
+
   return (
     <section id="reviews" className="py-16 md:py-24 bg-white scroll-reveal">
       <div className="container mx-auto px-4">
@@ -15,6 +33,7 @@ export function Reviews() {
         <div className="relative scroll-container">
           <div className="scroll-shadow-right"></div>
           <div
+            ref={scrollRef}
             className="overflow-x-auto scrollbar-hide scroll-content"
             role="region"
             aria-label="ביקורות לקוחות"
@@ -100,11 +119,12 @@ export function Reviews() {
           top: 0;
           right: 0;
           bottom: 0;
-          width: 60px;
+          width: 80px;
           background: linear-gradient(
             to left,
-            rgba(255, 255, 255, 1),
-            rgba(255, 255, 255, 0)
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(255, 255, 255, 0.7) 30%,
+            rgba(255, 255, 255, 0) 100%
           );
           pointer-events: none;
           z-index: 10;
@@ -112,8 +132,13 @@ export function Reviews() {
           transition: opacity 0.3s ease;
         }
 
-        .scroll-content::-webkit-scrollbar {
-          display: none;
+        .scroll-content {
+          cursor: grab;
+          scroll-behavior: smooth;
+        }
+
+        .scroll-content:active {
+          cursor: grabbing;
         }
 
         @keyframes scrollHint {
