@@ -9,7 +9,6 @@ import {
   WhyChooseUs,
   Companies,
   Reviews,
-  ContactForm,
   ContactSection,
   Footer,
 } from "./components";
@@ -178,7 +177,6 @@ function App() {
       <WhyChooseUs />
       <Companies />
       <Reviews />
-      <ContactForm />
       <ContactSection />
       <Footer />
     </div>

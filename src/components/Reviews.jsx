@@ -1,50 +1,6 @@
-import { REVIEWS, COLORS } from "../constants";
-import { useEffect, useRef, useState } from "react";
+import { COLORS, REVIEWS } from "../constants";
 
 export function Reviews() {
-  const scrollRef = useRef(null);
-  const shadowRef = useRef(null);
-  const [hasOverflow, setHasOverflow] = useState(false);
-
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    const shadowElement = shadowRef.current;
-    if (!scrollContainer) return;
-
-    const checkOverflow = () => {
-      const hasScroll =
-        scrollContainer.scrollWidth > scrollContainer.clientWidth;
-      setHasOverflow(hasScroll);
-      if (shadowElement) {
-        shadowElement.style.opacity = hasScroll ? "1" : "0";
-      }
-    };
-
-    const handleWheel = (e) => {
-      if (e.deltaY !== 0) {
-        e.preventDefault();
-        scrollContainer.scrollLeft += e.deltaY;
-      }
-    };
-
-    const handleScroll = () => {
-      if (!shadowElement) return;
-      const isAtStart = scrollContainer.scrollLeft <= 10;
-      shadowElement.style.opacity = hasOverflow && !isAtStart ? "1" : "0";
-    };
-
-    checkOverflow();
-    window.addEventListener("resize", checkOverflow);
-    scrollContainer.addEventListener("wheel", handleWheel, { passive: false });
-    scrollContainer.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("resize", checkOverflow);
-      scrollContainer.removeEventListener("wheel", handleWheel);
-      scrollContainer.removeEventListener("scroll", handleScroll);
-    };
-  }, [hasOverflow]);
-
   return (
     <section id="reviews" className="py-16 md:py-24 bg-white scroll-reveal">
       <div className="container mx-auto px-4">
@@ -55,11 +11,8 @@ export function Reviews() {
           <p className="text-lg text-gray-600">{REVIEWS.subtitle}</p>
         </div>
 
-        {/* Horizontal scroll container with shadow indicators */}
         <div className="relative scroll-container">
-          <div ref={shadowRef} className="scroll-shadow-left"></div>
           <div
-            ref={scrollRef}
             className="overflow-x-auto scrollbar-hide scroll-content"
             role="region"
             aria-label="ביקורות לקוחות"

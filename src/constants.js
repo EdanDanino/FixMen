@@ -9,8 +9,9 @@ export const COLORS = {
 // Contact Info
 export const CONTACT = {
   phone: "054-611-5996",
-  phone2: "053-123-4567", // מספר שני - תחליף במספר האמיתי
+  phone2: "054-611-6811",
   whatsapp: "972546115996",
+  whatsapp2: "972546116811",
   email: "FixMen.is@gmail.com",
 };
 
@@ -29,15 +30,13 @@ export const HERO = {
     line1: "פתרון מלא לכל פרויקט בנייה,",
     line2: "בכל זמן, ובמהירות!",
   },
-  videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ&controls=0",
   paragraphs: {
     intro:
       "כל פרויקט בנייה או שיפוץ דורש תכנון מדויק וביצוע מקצועי. כל עיכוב עלול לעלות יקר. מצד אחד, אתם רוצים באופן טבעי פתרון מהיר מאוד. מצד שני, ברור שאי אפשר להתפשר על האיכות.",
     fixmen: "בזכות FixMen",
     fixmenText: "אתם יכולים לסמן ✓ גם על הזריזות וגם על היסודיות.",
     experience:
-      "עם ותק של למעלה מעשור בתחום, בקיאות מקצועית ולא פחות חשוב, מחויבות אמיתית לכל לקוח ולקוחה, נשלים את הפרויקט בזמן ובתקציב – ונוודא שהתוצאה תהיה לטווח ארוך מאוד.",
-    experienceBold: "למעלה מעשור בתחום",
+      "בקיאות מקצועית, מחויבות אמיתית לכל לקוח ולקוחה, נשלים את הפרויקט בזמן ובתקציב – ונוודא שהתוצאה תהיה לטווח ארוך מאוד.",
     highlight:
       "גם כשנדרש תיקון דחוף וגם כשמדובר על פרויקט חדש, השלב הראשון הוא בחינה יסודית ומקיפה של המצב הקיים. לאחר מכן תקבלו מאיתנו הסברים ברורים ומפורטים לגבי הדרכים השונות להגיע למצב הרצוי – ",
     highlightBold: "כדי שתוכלו לקבל את ההחלטה הנכונה ביותר עבורכם.",
@@ -53,24 +52,22 @@ export const SERVICES = {
       description: "שיפוץ מלא או חלקי של דירות, בתים ומשרדים ברמה הגבוהה ביותר",
     },
     {
-      title: "בניה חדשה",
-      description: "ליווי מקצועי מהתכנון ועד למסירה של פרויקטי בנייה חדשים",
+      title: "שיפוץ מקלחות",
+      description:
+        " החלפת ריצוף וחיפוי קירות, עדכון האינסטלציה, החלפת כלים סניטריים והתקנת מקלחון או אמבטיה חדשים.",
+    },
+
+    {
+      title: "עבודות צבע וסיוד",
+      description: "צביעת הבית והמשרד תיקוני טיח והחלקת קירות",
     },
     {
-      title: "עבודות גבס וצבע",
-      description: "גימור פנים ברמה גבוהה עם תשומת לב לכל פרט",
-    },
-    {
-      title: "עבודות חשמל ואינסטלציה",
-      description: "התקנת מערכות חשמל ואינסטלציה תקניות ובטוחות",
+      title: "עבודות גבס",
+      description: "עבודות גבס בעיצוב אישי, כולל קירות, תקרות ומדפים ",
     },
     {
       title: "ריצוף וחיפוי",
       description: "ביצוע עבודות ריצוף וחיפוי מקצועיות עם חומרים איכותיים",
-    },
-    {
-      title: "תיקונים דחופים",
-      description: "זמינות מיידית לטיפול בתקלות ובעיות דחופות",
     },
   ],
 };
@@ -79,67 +76,56 @@ export const SERVICES = {
 export const GALLERY = {
   title: "הפרויקטים שלנו",
   subtitle: "סיפורי הצלחה מעבודות שביצענו",
-  itemsPerPage: 6,
+  itemsPerPage: 5,
   projects: [
     {
-      title: "שיפוץ דירה בתל אביב",
-      description: "שיפוץ מלא של דירת 4 חדרים",
-      images: ["/gallery/project1-1.jpg", "/gallery/project1-2.jpg", "/gallery/project1-3.jpg"],
+      title: "בניית קיר גבס בעיצוב אישי ",
+      description: "בניית קיר גבס בעיצוב אישי וחיפוי לבנים",
+      images: [
+        "/public/pictures/geves-1-1.JPG",
+        "/public/pictures/geves-1-2.JPG",
+      ],
     },
     {
-      title: "בניית וילה ברמת השרון",
-      description: "בנייה חדשה מהיסוד",
-      images: ["/gallery/project2-1.jpg", "/gallery/project2-2.jpg"],
+      title: "חידוש קירות פנים",
+      description: "חידוש ואיטום קיר סובב חלון",
+      images: [
+        "/public/pictures/window-1-1.JPG",
+        "/public/pictures/window-1-2.JPG",
+      ],
     },
     {
-      title: "שדרוג משרדים",
-      description: "עיצוב וביצוע משרדי חברת הייטק",
-      images: ["/gallery/project3-1.jpg", "/gallery/project3-2.jpg", "/gallery/project3-3.jpg"],
+      title: "תיקוני תקרה",
+      description: "תיקון תקרה לאחד נזילה ",
+      images: [
+        "/public/pictures/wall-fix-1-1.JPG",
+        "/public/pictures/wall-fix-1-2.JPG",
+      ],
     },
     {
-      title: "עבודות גבס וצבע",
-      description: "גימור פנים ברמה גבוהה",
-      images: ["/gallery/project4-1.jpg"],
+      title: "חידוש דלתות וחלונות",
+      description: "צביעת דלתות וחלונות בצע שמן",
+      images: [
+        "/public/pictures/delet-renew-1-1.JPG",
+        "/public/pictures/delet-renew-1-2.JPG",
+        "/public/pictures/delet-renew-1-3.JPG",
+        "/public/pictures/delet-renew-1-4.JPG",
+        "/public/pictures/delet-renew-1-5.JPG",
+      ],
     },
     {
       title: "ריצוף וחיפוי",
       description: "חידוש מלא של חדרי אמבטיה ומטבח",
-      images: ["/gallery/project5-1.jpg", "/gallery/project5-2.jpg", "/gallery/project5-3.jpg"],
+      images: [
+        "/gallery/project5-1.jpg",
+        "/gallery/project5-2.jpg",
+        "/gallery/project5-3.jpg",
+      ],
     },
     {
       title: "תיקונים ושיפוצים",
       description: "פרויקט שיפוץ מהיר ויעיל",
       images: ["/gallery/project6-1.jpg", "/gallery/project6-2.jpg"],
-    },
-    {
-      title: "שיפוץ מטבח מודרני",
-      description: "עיצוב וביצוע מטבח חדיש",
-      images: ["/gallery/project7-1.jpg", "/gallery/project7-2.jpg", "/gallery/project7-3.jpg"],
-    },
-    {
-      title: "חדרי רחצה יוקרתיים",
-      description: "שיפוץ מלא עם חומרים איכותיים",
-      images: ["/gallery/project8-1.jpg"],
-    },
-    {
-      title: "דירת גן בהרצליה",
-      description: "שיפוץ מקיף עם עבודות חוץ",
-      images: ["/gallery/project9-1.jpg", "/gallery/project9-2.jpg"],
-    },
-    {
-      title: "משרדים בפתח תקווה",
-      description: "עיצוב פנים ושיפוץ מלא",
-      images: ["/gallery/project10-1.jpg", "/gallery/project10-2.jpg", "/gallery/project10-3.jpg"],
-    },
-    {
-      title: "בית פרטי בראשון לציון",
-      description: "בניה וגימור ברמה גבוהה",
-      images: ["/gallery/project11-1.jpg", "/gallery/project11-2.jpg"],
-    },
-    {
-      title: "דירת יוקרה בגבעתיים",
-      description: "שיפוץ פנים מלא",
-      images: ["/gallery/project12-1.jpg", "/gallery/project12-2.jpg", "/gallery/project12-3.jpg"],
     },
   ],
 };
@@ -193,12 +179,13 @@ export const COMPANIES = {
   title: "חברות ועסקים שעובדים איתנו",
   subtitle: "אנחנו גאים לעבוד עם העסקים המובילים במשק",
   items: [
-    { name: "חברת הייטק מובילה", icon: "💻" },
-    { name: "רשת מלונות בוטיק", icon: "🏨" },
-    { name: "משרד עורכי דין בינלאומי", icon: "⚖️" },
-    { name: "חברת נדל״ן יוקרתית", icon: "🏗️" },
-    { name: "רשת מסעדות פרימיום", icon: "🍽️" },
-    { name: "מרכז רפואי פרטי", icon: "🏥" },
+    { name: "אלביט", icon: "🚀" }, // Defense/Technology (High-Tech)
+    { name: "גשם בפארק", icon: "🌳" }, // Park/Leisure/Venue (Could be a generic placeholder or a specific place)
+    { name: "אינטר פלוס", icon: "💻" }, // Assuming a High-Tech/Software Company
+    { name: "כוחות הביטחון", icon: "🛡️" }, // Security Forces/Defense
+    { name: "מכבי שירותי בריאות", icon: "🏥" }, // Health Services/Medical Center
+    { name: "מגן אופטיק", icon: "👓" }, // Optics / Equipment
+    { name: "מאוס פתרונות הנדסת אנוש", icon: "🧠" }, // Human Engineering/Solutions (Consulting/Tech)
   ],
 };
 
@@ -208,52 +195,60 @@ export const REVIEWS = {
   subtitle: "ביקורות אמיתיות מלקוחות מרוצים",
   items: [
     {
-      name: "דני כהן",
+      name: "ליאורה כ.",
       location: "תל אביב",
       rating: 5,
-      text: "שיפצנו את כל הדירה עם FixMen והתוצאה פשוט מדהימה! עבודה מקצועית, מהירה ובתקציב המוסכם. ממליץ בחום!",
-      source: "Google",
-      avatar: "ד",
+      text: "שחף ועידו בנו לנו בבית קיר גבס מעוצב (בצורת קשת). הם היו מקצועיים, אדיבים ושירותיים, זמינים, עבדו ביעילות והשאירו אחריהם נקי ומסודר עם סיום העבודה, והמחיר שביקשו היה הוגן בהחלט. ממליצים עליהם בחום!",
+      source: "Easy",
+      avatar: "ל",
     },
     {
-      name: "שרה לוי",
-      location: "רמת גן",
+      name: "Nechama B",
+      location: "תל אביב",
       rating: 5,
-      text: "צוות מקצועי ואדיב במיוחד. הגיעו בזמן, עבדו נקי ומסודר, והתוצאה עלתה על הציפיות. בהחלט אשתמש בשירותים שלהם שוב!",
-      source: "Facebook",
-      avatar: "ש",
+      text: "התקשורת היתה אדיבה ומקצועית, עשו עבודה מושלמת בשיוף וצביעה של התקרה וסיימו בניקיון יסודי. לא נשאר זכר למצב הנוראי בו היתה התקרה, ממליצים מאוד!",
+      source: "Easy",
+      avatar: "N",
     },
     {
-      name: "מיכאל אברהם",
-      location: "הרצליה",
+      name: "מירב מ.",
+      location: "פתח תקווה",
       rating: 5,
-      text: "בנינו הרחבה לבית עם FixMen. הליווי המקצועי לאורך כל הדרך היה מצוין, והם עמדו בכל לוחות הזמנים שהתחייבו. מומלץ ביותר!",
-      source: "Google",
+      text: "שירות, אדיב, מקצועי ואמין. עבודה מדהימה ונקיה. אני כבר יודעת שבפעם הבאה שאצטרך לתקן משהו אפנה אליהם. ממליצה בחום. אני מרוצה מאוד.",
+      source: "Easy",
       avatar: "מ",
     },
     {
-      name: "רונית ישראלי",
-      location: "גבעתיים",
-      rating: 5,
-      text: "שיפצנו את המטבח וחדרי הרחצה. העבודה בוצעה ברמה הכי גבוהה שיש, עם תשומת לב לכל פרט. תודה רבה!",
-      source: "Google",
-      avatar: "ר",
-    },
-    {
-      name: "יוסי מזרחי",
+      name: "Michal M.",
       location: "ראשון לציון",
       rating: 5,
-      text: "אחרי שעבדתי עם כמה קבלנים שאכזבו, מצאתי את FixMen. סוף סוף אנשים אמינים שעושים מה שהם מבטיחים! ממליץ בחום לכל מי שצריך!",
-      source: "Facebook",
+      text: "ממליצה בחום 2 בחורים צעירים, מקצועיים, אדיבים, שרותיים ביותר, גם המחיר הוגן💯 עמידה בזמנים, ברור שאמליץ💪",
+      source: "Easy",
+      avatar: "M",
+    },
+    {
+      name: "יפעת י.",
+      location: "גבעתיים",
+      rating: 5,
+      text: "שירות נהדר, מקצועי, אדיב! ממליצה בחום!!",
+      source: "Easy",
       avatar: "י",
     },
     {
-      name: "נועה דהן",
+      name: "לנה מאירוביץ",
       location: "פתח תקווה",
       rating: 5,
-      text: "עבודה מדהימה! שיפצנו את כל הדירה תוך חודש וחצי בדיוק כמו שהובטח. איכות עבודה גבוהה ושירות מעולה. תודה ענקית!",
-      source: "Google",
-      avatar: "נ",
+      text: "מרוצה מאוד מהתיקונים וצביעה שעשו עידו ושחף. שירות אמין, אדיב, מקצועי. וגם ניקו אחרי העבודה. תודה ובהצלחה לכם",
+      source: "Facebook",
+      avatar: "ל",
+    },
+    {
+      name: "Jager Israel Ben Cohen ",
+      location: "פתח תקווה",
+      rating: 5,
+      text: "איש ישר, אמין, מקצוען, וזריז, כל מה שצריך להיות בבעל מקצוע טוב, בהחלט במידה ואצטרך אתה הבן אדם שאפנה אליו שוב",
+      source: "Facebook",
+      avatar: "J",
     },
   ],
 };

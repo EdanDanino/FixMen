@@ -10,7 +10,6 @@ export function GalleryItem({ project, currentImageIndex, onNext, onPrev }) {
       role="article"
       aria-label={`${project.title} - ${project.description}`}
     >
-      {/* Image Container with Navigation */}
       <div className="relative w-full pt-[75%] bg-gradient-to-br from-slate-200 to-slate-300 overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center p-6">
@@ -19,7 +18,7 @@ export function GalleryItem({ project, currentImageIndex, onNext, onPrev }) {
               style={{ color: COLORS.goldDark }}
               aria-hidden="true"
             >
-              🏗️
+              <img src={project.images[currentImageIndex]} />
             </div>
             <p className="text-sm text-gray-500">
               תמונה {currentImageIndex + 1} מתוך {project.images.length}
@@ -27,7 +26,6 @@ export function GalleryItem({ project, currentImageIndex, onNext, onPrev }) {
           </div>
         </div>
 
-        {/* Navigation Buttons - only show if multiple images */}
         {hasMultipleImages && (
           <>
             <button
@@ -59,7 +57,6 @@ export function GalleryItem({ project, currentImageIndex, onNext, onPrev }) {
               →
             </button>
 
-            {/* Image Indicators */}
             <div
               className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-10"
               role="status"

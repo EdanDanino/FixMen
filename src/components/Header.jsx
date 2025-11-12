@@ -10,7 +10,6 @@ export function Header() {
           className="h-16 w-auto"
         />
 
-        {/* Double Phone Button */}
         <div
           className="flex gap-3"
           role="navigation"

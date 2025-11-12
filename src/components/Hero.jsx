@@ -10,20 +10,6 @@ export function Hero() {
           <span style={{ color: COLORS.goldDark }}>{HERO.title.line2}</span>
         </h1>
 
-        {/* Video Section */}
-        <div className="my-12 rounded-2xl overflow-hidden shadow-2xl bg-black">
-          <div className="relative" style={{ paddingBottom: "56.25%" }}>
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src={HERO.videoUrl}
-              title="FixMen Video"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </div>
-
         <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 mt-12">
           <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-6">
             {HERO.paragraphs.intro}
@@ -37,10 +23,7 @@ export function Hero() {
           </p>
 
           <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-            עם ותק של{" "}
-            <span className="font-bold">{HERO.paragraphs.experienceBold}</span>,
-            בקיאות מקצועית ולא פחות חשוב, מחויבות אמיתית לכל לקוח ולקוחה, נשלים
-            את הפרויקט בזמן ובתקציב – ונוודא שהתוצאה תהיה לטווח ארוך מאוד.
+            {HERO.paragraphs.experience}
           </p>
         </div>
 

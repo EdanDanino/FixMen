@@ -1,50 +1,6 @@
 import { SERVICES, COLORS } from "../constants";
-import { useEffect, useRef, useState } from "react";
 
 export function Services() {
-  const scrollRef = useRef(null);
-  const shadowRef = useRef(null);
-  const [hasOverflow, setHasOverflow] = useState(false);
-
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    const shadowElement = shadowRef.current;
-    if (!scrollContainer) return;
-
-    const checkOverflow = () => {
-      const hasScroll =
-        scrollContainer.scrollWidth > scrollContainer.clientWidth;
-      setHasOverflow(hasScroll);
-      if (shadowElement) {
-        shadowElement.style.opacity = hasScroll ? "1" : "0";
-      }
-    };
-
-    const handleWheel = (e) => {
-      if (e.deltaY !== 0) {
-        e.preventDefault();
-        scrollContainer.scrollLeft += e.deltaY;
-      }
-    };
-
-    const handleScroll = () => {
-      if (!shadowElement) return;
-      const isAtStart = scrollContainer.scrollLeft <= 10;
-      shadowElement.style.opacity = hasOverflow && !isAtStart ? "1" : "0";
-    };
-
-    checkOverflow();
-    window.addEventListener("resize", checkOverflow);
-    scrollContainer.addEventListener("wheel", handleWheel, { passive: false });
-    scrollContainer.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("resize", checkOverflow);
-      scrollContainer.removeEventListener("wheel", handleWheel);
-      scrollContainer.removeEventListener("scroll", handleScroll);
-    };
-  }, [hasOverflow]);
-
   return (
     <section id="services" className="bg-white py-16 md:py-24 scroll-reveal">
       <div className="container mx-auto px-4">
@@ -54,9 +10,7 @@ export function Services() {
 
         {/* Horizontal scroll container with shadow indicators */}
         <div className="relative scroll-container">
-          <div ref={shadowRef} className="scroll-shadow-left"></div>
           <div
-            ref={scrollRef}
             className="overflow-x-auto scrollbar-hide scroll-content"
             role="region"
             aria-label="השירותים שלנו"
@@ -69,12 +23,14 @@ export function Services() {
               {SERVICES.items.map((service, index) => (
                 <div
                   key={index}
-                  className="card-item bg-slate-50 rounded-xl p-6 hover:shadow-lg transition border-2 border-transparent flex-shrink-0 w-80"
+                  className="card-item bg-slate-50 rounded-xl p-6 hover:shadow-lg transition border-2 flex-shrink-0 w-80"
+                  style={{ borderColor: "rgba(233, 204, 136, 0.3)" }}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.borderColor = COLORS.gold)
                   }
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.borderColor = "transparent")
+                    (e.currentTarget.style.borderColor =
+                      "rgba(233, 204, 136, 0.3)")
                   }
                   role="article"
                   aria-labelledby={`service-title-${index}`}
@@ -104,24 +60,6 @@ export function Services() {
 
         .scroll-container {
           position: relative;
-        }
-
-        .scroll-shadow-left {
-          position: absolute;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          width: 80px;
-          background: linear-gradient(
-            to right,
-            rgba(255, 255, 255, 0.95) 0%,
-            rgba(255, 255, 255, 0.7) 30%,
-            rgba(255, 255, 255, 0) 100%
-          );
-          pointer-events: none;
-          z-index: 10;
-          opacity: 0;
-          transition: opacity 0.3s ease;
         }
 
         .scroll-content {

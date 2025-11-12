@@ -1,6 +1,5 @@
 export * from "./Companies";
 export * from "./ContactSection";
-export * from "./ContactForm";
 export * from "./FloatingButtons";
 export * from "./Footer";
 export * from "./Gallery";
