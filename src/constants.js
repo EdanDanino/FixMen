@@ -174,18 +174,37 @@ export const WHY_CHOOSE = {
   ],
 };
 
-// Companies
 export const COMPANIES = {
   title: "חברות ועסקים שעובדים איתנו",
   subtitle: "אנחנו גאים לעבוד עם העסקים המובילים במשק",
   items: [
-    { name: "אלביט", icon: "🚀" }, // Defense/Technology (High-Tech)
-    { name: "גשם בפארק", icon: "🌳" }, // Park/Leisure/Venue (Could be a generic placeholder or a specific place)
-    { name: "אינטר פלוס", icon: "💻" }, // Assuming a High-Tech/Software Company
-    { name: "כוחות הביטחון", icon: "🛡️" }, // Security Forces/Defense
-    { name: "מכבי שירותי בריאות", icon: "🏥" }, // Health Services/Medical Center
-    { name: "מגן אופטיק", icon: "👓" }, // Optics / Equipment
-    { name: "מאוס פתרונות הנדסת אנוש", icon: "🧠" }, // Human Engineering/Solutions (Consulting/Tech)
+    {
+      name: "אלביט",
+      icon: "/public/pictures/elbitlogo.png",
+    },
+    {
+      name: "גשם בפארק",
+      icon: "/public/pictures/geshemlogo.png",
+    },
+    {
+      name: "אינטר פלוס",
+      icon: "/public/pictures/interlogo.png",
+    },
+    {
+      name: "כוחות הביטחון",
+      icon: "/public/pictures/misrad.jpg",
+    }, // לוגו משרד הביטחון (כנציג של מערכת הביטחון)
+    {
+      name: "מכבי שירותי בריאות",
+      icon: "/public/pictures/macabilogo.png",
+    },
+    {
+      name: "מגן אופטיק",
+      icon: "/public/pictures/magenlogo.png",
+    },
+    {
+      name: "מאוס פתרונות הנדסת אנוש",
+    },
   ],
 };
 

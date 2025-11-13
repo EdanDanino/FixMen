@@ -35,8 +35,14 @@ export function Companies() {
                   role="article"
                   aria-label={company.name}
                 >
-                  <div className="text-4xl mb-3" aria-hidden="true">
-                    {company.icon}
+                  <div className="mb-3 flex items-center justify-center h-16">
+                    {company.icon && (
+                      <img
+                        src={company.icon}
+                        alt={`${company.name} logo`}
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    )}
                   </div>
                   <p className="text-sm font-semibold text-gray-700">
                     {company.name}
