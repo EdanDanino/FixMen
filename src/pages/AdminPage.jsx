@@ -24,6 +24,7 @@ export function AdminPage() {
   const [activeTab, setActiveTab] = useState("hero");
   const [editedData, setEditedData] = useState(constants);
   const [originalImages, setOriginalImages] = useState(new Set());
+  const [imageFilenames, setImageFilenames] = useState(new Map());
 
   // Desktop only check
   useEffect(() => {
@@ -56,55 +57,76 @@ export function AdminPage() {
     }
   };
 
+  // Helper function to replace base64 with filename
+  const replaceBase64WithFilename = (obj) => {
+    if (typeof obj === "string" && obj.startsWith("data:image")) {
+      return imageFilenames.get(obj) || obj;
+    }
+    if (Array.isArray(obj)) {
+      return obj.map(replaceBase64WithFilename);
+    }
+    if (obj && typeof obj === "object") {
+      const newObj = {};
+      for (const [key, value] of Object.entries(obj)) {
+        newObj[key] = replaceBase64WithFilename(value);
+      }
+      return newObj;
+    }
+    return obj;
+  };
+
   const handleSave = () => {
     try {
       localStorage.setItem("fixmen_constants", JSON.stringify(editedData));
       setConstants(editedData);
 
+      // Replace base64 with filenames for output
+      const outputData = replaceBase64WithFilename(editedData);
+
       // Download constants file (desktop only)
       if (window.innerWidth >= 1024) {
         const constantsContent = `// Brand Colors
-export const COLORS = ${JSON.stringify(editedData.COLORS, null, 2)};
+export const COLORS = ${JSON.stringify(outputData.COLORS, null, 2)};
 
 // Contact Info
-export const CONTACT = ${JSON.stringify(editedData.CONTACT, null, 2)};
+export const CONTACT = ${JSON.stringify(outputData.CONTACT, null, 2)};
 
 // Navigation
-export const NAV = ${JSON.stringify(editedData.NAV, null, 2)};
+export const NAV = ${JSON.stringify(outputData.NAV, null, 2)};
 
 // Hero Section
-export const HERO = ${JSON.stringify(editedData.HERO, null, 2)};
+export const HERO = ${JSON.stringify(outputData.HERO, null, 2)};
 
 // Services
-export const SERVICES = ${JSON.stringify(editedData.SERVICES, null, 2)};
+export const SERVICES = ${JSON.stringify(outputData.SERVICES, null, 2)};
 
 // Gallery
-export const GALLERY = ${JSON.stringify(editedData.GALLERY, null, 2)};
+export const GALLERY = ${JSON.stringify(outputData.GALLERY, null, 2)};
 
 // Why Choose Us
-export const WHY_CHOOSE = ${JSON.stringify(editedData.WHY_CHOOSE, null, 2)};
+export const WHY_CHOOSE = ${JSON.stringify(outputData.WHY_CHOOSE, null, 2)};
 
 // Companies
-export const COMPANIES = ${JSON.stringify(editedData.COMPANIES, null, 2)};
+export const COMPANIES = ${JSON.stringify(outputData.COMPANIES, null, 2)};
 
 // Reviews
-export const REVIEWS = ${JSON.stringify(editedData.REVIEWS, null, 2)};
+export const REVIEWS = ${JSON.stringify(outputData.REVIEWS, null, 2)};
 
 // Contact Form
-export const CONTACT_FORM = ${JSON.stringify(editedData.CONTACT_FORM, null, 2)};
+export const CONTACT_FORM = ${JSON.stringify(outputData.CONTACT_FORM, null, 2)};
 
 // Contact Section
 export const CONTACT_SECTION = ${JSON.stringify(
-          editedData.CONTACT_SECTION,
+          outputData.CONTACT_SECTION,
           null,
           2
         )};
 
 // Footer
-export const FOOTER = ${JSON.stringify(editedData.FOOTER, null, 2)};
+export const FOOTER = ${JSON.stringify(outputData.FOOTER, null, 2)};
 
 // Accessibility
-export const ARIA = ${JSON.stringify(editedData.ARIA, null, 2)};
+export const ARIA = ${JSON.stringify(outputData.ARIA, null, 2)};
 `;
 
         const blob = new Blob([constantsContent], { type: "text/javascript" });
@@ -141,6 +163,22 @@ export const ARIA = ${JSON.stringify(editedData.ARIA, null, 2)};
 
   const isNewImage = (imgSrc) => {
     return imgSrc && imgSrc.startsWith("data:") && !originalImages.has(imgSrc);
+  };
+
+  const handleImageUpload = (file, callback) => {
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64Data = event.target.result;
+        const filename = `./${file.name}`;
+
+        // Store the mapping
+        setImageFilenames((prev) => new Map(prev).set(base64Data, filename));
+
+        callback(base64Data);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const tabs = [
@@ -425,13 +463,13 @@ export const ARIA = ${JSON.stringify(editedData.ARIA, null, 2)};
             </div>
             <div>
               <label className="block font-semibold mb-1">תמונות</label>
-              <div className="grid grid-cols-3 gap-2 mb-2">
+              <div className="grid grid-cols-3 gap-4 mb-4">
                 {project.images.map((img, imgIdx) => (
-                  <div key={imgIdx} className="relative group">
+                  <div key={imgIdx} className="relative group aspect-square">
                     <img
                       src={img}
                       alt=""
-                      className="w-full h-24 object-cover rounded border-2"
+                      className="w-full h-full object-cover rounded border-2"
                       style={{ borderColor: COLORS.gold }}
                     />
                     {isNewImage(img) && (
@@ -459,18 +497,14 @@ export const ARIA = ${JSON.stringify(editedData.ARIA, null, 2)};
                 accept="image/*"
                 onChange={(e) => {
                   const file = e.target.files[0];
-                  if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                      const newProjects = [...editedData.GALLERY.projects];
-                      newProjects[index].images = [
-                        ...newProjects[index].images,
-                        event.target.result,
-                      ];
-                      updateField("GALLERY.projects", newProjects);
-                    };
-                    reader.readAsDataURL(file);
-                  }
+                  handleImageUpload(file, (base64Data) => {
+                    const newProjects = [...editedData.GALLERY.projects];
+                    newProjects[index].images = [
+                      ...newProjects[index].images,
+                      base64Data,
+                    ];
+                    updateField("GALLERY.projects", newProjects);
+                  });
                 }}
                 className="w-full p-2 border rounded"
               />
@@ -701,15 +735,11 @@ export const ARIA = ${JSON.stringify(editedData.ARIA, null, 2)};
                 accept="image/*"
                 onChange={(e) => {
                   const file = e.target.files[0];
-                  if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                      const newItems = [...editedData.COMPANIES.items];
-                      newItems[index].icon = event.target.result;
-                      updateField("COMPANIES.items", newItems);
-                    };
-                    reader.readAsDataURL(file);
-                  }
+                  handleImageUpload(file, (base64Data) => {
+                    const newItems = [...editedData.COMPANIES.items];
+                    newItems[index].icon = base64Data;
+                    updateField("COMPANIES.items", newItems);
+                  });
                 }}
                 className="w-full p-2 border rounded"
               />
