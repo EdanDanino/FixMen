@@ -1,13 +1,39 @@
+import { useState, useEffect } from "react";
 import { CONTACT, COLORS, ARIA } from "../constants";
 
 export function FloatingButtons() {
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const footer = document.querySelector("footer");
+      if (!footer) return;
+
+      const footerRect = footer.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Hide buttons when footer is visible in viewport
+      setIsVisible(footerRect.top > windowHeight - 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Check initial state
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
       {/* Floating Call Button */}
       <a
         href={`tel:${CONTACT.phone}`}
-        className="fixed bottom-6 left-6 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-50 animate-pulse"
-        style={{ backgroundColor: COLORS.goldDark }}
+        className={`fixed bottom-6 left-6 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-50 ${
+          isVisible ? "animate-pulse" : ""
+        }`}
+        style={{
+          backgroundColor: COLORS.goldDark,
+          opacity: !isVisible ? 0 : 1,
+        }}
         onMouseEnter={(e) =>
           (e.currentTarget.style.backgroundColor = COLORS.black)
         }
@@ -35,6 +61,9 @@ export function FloatingButtons() {
         className="fixed bottom-24 left-6 bg-green-500 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center hover:bg-green-600 transition-all hover:scale-110 z-50"
         aria-label={`${ARIA.whatsapp} - פתח שיחה`}
         role="button"
+        style={{
+          opacity: !isVisible ? 0 : 1,
+        }}
       >
         <svg
           className="w-8 h-8"

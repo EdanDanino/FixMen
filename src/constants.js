@@ -56,7 +56,6 @@ export const SERVICES = {
       description:
         " החלפת ריצוף וחיפוי קירות, עדכון האינסטלציה, החלפת כלים סניטריים והתקנת מקלחון או אמבטיה חדשים.",
     },
-
     {
       title: "עבודות צבע וסיוד",
       description: "צביעת הבית והמשרד תיקוני טיח והחלקת קירות",
@@ -81,36 +80,27 @@ export const GALLERY = {
     {
       title: "בניית קיר גבס בעיצוב אישי ",
       description: "בניית קיר גבס בעיצוב אישי וחיפוי לבנים",
-      images: [
-        "/public/pictures/geves-1-1.JPG",
-        "/public/pictures/geves-1-2.JPG",
-      ],
+      images: ["./geves-1-1.JPG", "./geves-1-2.JPG"],
     },
     {
       title: "חידוש קירות פנים",
       description: "חידוש ואיטום קיר סובב חלון",
-      images: [
-        "/public/pictures/window-1-1.JPG",
-        "/public/pictures/window-1-2.JPG",
-      ],
+      images: ["./window-1-1.JPG", "./window-1-2.JPG"],
     },
     {
       title: "תיקוני תקרה",
       description: "תיקון תקרה לאחד נזילה ",
-      images: [
-        "/public/pictures/wall-fix-1-1.JPG",
-        "/public/pictures/wall-fix-1-2.JPG",
-      ],
+      images: ["./wall-fix-1-1.JPG", "./wall-fix-1-2.JPG"],
     },
     {
       title: "חידוש דלתות וחלונות",
       description: "צביעת דלתות וחלונות בצע שמן",
       images: [
-        "/public/pictures/delet-renew-1-1.JPG",
-        "/public/pictures/delet-renew-1-2.JPG",
-        "/public/pictures/delet-renew-1-3.JPG",
-        "/public/pictures/delet-renew-1-4.JPG",
-        "/public/pictures/delet-renew-1-5.JPG",
+        "./delet-renew-1-1.JPG",
+        "./delet-renew-1-2.JPG",
+        "./delet-renew-1-3.jpg",
+        "./delet-renew-1-4.jpg",
+        "./delet-renew-1-5.jpg",
       ],
     },
     {
@@ -180,27 +170,27 @@ export const COMPANIES = {
   items: [
     {
       name: "אלביט",
-      icon: "/public/pictures/elbitlogo.png",
+      icon: "./elbitlogo.png",
     },
     {
       name: "גשם בפארק",
-      icon: "/public/pictures/geshemlogo.png",
+      icon: "./geshemlogo.png",
     },
     {
       name: "אינטר פלוס",
-      icon: "/public/pictures/interlogo.png",
+      icon: "./interlogo.png",
     },
     {
       name: "כוחות הביטחון",
-      icon: "/public/pictures/misrad.jpg",
-    }, // לוגו משרד הביטחון (כנציג של מערכת הביטחון)
+      icon: "./misrad.jpg",
+    },
     {
       name: "מכבי שירותי בריאות",
-      icon: "/public/pictures/macabilogo.png",
+      icon: "./macabilogo.png",
     },
     {
       name: "מגן אופטיק",
-      icon: "/public/pictures/magenlogo.png",
+      icon: "./magenlogo.png",
     },
     {
       name: "מאוס פתרונות הנדסת אנוש",
