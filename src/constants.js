@@ -194,6 +194,7 @@ export const COMPANIES = {
     },
     {
       name: "מאוס פתרונות הנדסת אנוש",
+      icon: "./emptyLogo.jpg",
     },
   ],
 };
