@@ -12,20 +12,36 @@ import {
   ContactSection,
   Footer,
 } from "./components";
-import { GALLERY } from "./constants";
+import * as CONSTANTS from "./constants";
+import { ConstantsContext } from "./hooks/useConstants";
 
 function App() {
   const [showSideNav, setShowSideNav] = useState(false);
   const [galleryImageIndex, setGalleryImageIndex] = useState({});
 
+  // Load constants from localStorage or use defaults
+  const [constants] = useState(() => {
+    try {
+      const saved = localStorage.getItem("fixmen_constants");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Merge with defaults to ensure all keys exist
+        return { ...CONSTANTS, ...parsed };
+      }
+    } catch (error) {
+      console.error("Error loading constants:", error);
+    }
+    return CONSTANTS;
+  });
+
   // Initialize gallery image indices
   useEffect(() => {
     const initialIndices = {};
-    GALLERY.projects.forEach((_, index) => {
+    constants.GALLERY.projects.forEach((_, index) => {
       initialIndices[index] = 0;
     });
     setGalleryImageIndex(initialIndices);
-  }, []);
+  }, [constants.GALLERY.projects]);
 
   // Intersection Observer for scroll animations
   useEffect(() => {
@@ -107,12 +123,13 @@ function App() {
   };
 
   return (
-    <div
-      className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100"
-      dir="rtl"
-    >
-      <style>
-        {`
+    <ConstantsContext.Provider value={constants}>
+      <div
+        className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100"
+        dir="rtl"
+      >
+        <style>
+          {`
           html {
             scroll-behavior: smooth;
           }
@@ -162,24 +179,25 @@ function App() {
             animation: cardPopIn 0.5s ease-out forwards;
           }
         `}
-      </style>
+        </style>
 
-      <FloatingButtons />
-      <SideNav showSideNav={showSideNav} scrollToSection={scrollToSection} />
-      <Header />
-      <Hero />
-      <Services />
-      <Gallery
-        galleryImageIndex={galleryImageIndex}
-        onGalleryNext={handleGalleryNext}
-        onGalleryPrev={handleGalleryPrev}
-      />
-      <WhyChooseUs />
-      <Companies />
-      <Reviews />
-      <ContactSection />
-      <Footer />
-    </div>
+        <FloatingButtons />
+        <SideNav showSideNav={showSideNav} scrollToSection={scrollToSection} />
+        <Header />
+        <Hero />
+        <Services />
+        <Gallery
+          galleryImageIndex={galleryImageIndex}
+          onGalleryNext={handleGalleryNext}
+          onGalleryPrev={handleGalleryPrev}
+        />
+        <WhyChooseUs />
+        <Companies />
+        <Reviews />
+        <ContactSection />
+        <Footer />
+      </div>
+    </ConstantsContext.Provider>
   );
 }
 

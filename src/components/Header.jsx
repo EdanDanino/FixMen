@@ -11,7 +11,7 @@ export function Header() {
         />
 
         <div
-          className="flex gap-3"
+          className="flex gap-3 items-center"
           role="navigation"
           aria-label="אפשרויות יצירת קשר"
         >
