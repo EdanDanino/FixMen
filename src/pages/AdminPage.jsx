@@ -77,20 +77,49 @@ export function AdminPage() {
   };
 
   const handleSave = () => {
+    const errors = [];
+
     try {
       // Validate data before saving
       if (!editedData) {
-        throw new Error("אין נתונים לשמירה");
+        errors.push("❌ אין נתונים לשמירה");
+      }
+
+      // Validate required fields
+      if (editedData) {
+        // Check for empty titles/critical fields
+        if (!editedData.HERO?.title?.line1?.trim()) {
+          errors.push("❌ כותרת ראשית (שורה 1) ריקה");
+        }
+        if (!editedData.CONTACT?.phone?.trim() && !editedData.CONTACT?.whatsapp?.trim()) {
+          errors.push("❌ נדרש לפחות מספר טלפון או WhatsApp אחד");
+        }
+        if (!editedData.SERVICES?.items?.length) {
+          errors.push("⚠️ אין שירותים מוגדרים");
+        }
+        if (!editedData.GALLERY?.projects?.length) {
+          errors.push("⚠️ אין פרויקטים בגלריה");
+        }
       }
 
       // Try to save to localStorage
-      try {
-        localStorage.setItem("fixmen_constants", JSON.stringify(editedData));
-      } catch (localStorageError) {
-        if (localStorageError.name === "QuotaExceededError") {
-          throw new Error("אין מספיק מקום באחסון המקומי. נסה למחוק תמונות או נתונים ישנים");
+      if (errors.length === 0) {
+        try {
+          localStorage.setItem("fixmen_constants", JSON.stringify(editedData));
+        } catch (localStorageError) {
+          if (localStorageError.name === "QuotaExceededError") {
+            errors.push("❌ אין מספיק מקום באחסון המקומי. נסה למחוק תמונות או נתונים ישנים");
+          } else {
+            errors.push(`❌ שגיאה בשמירה לאחסון מקומי: ${localStorageError.message}`);
+          }
         }
-        throw new Error(`שגיאה בשמירה לאחסון מקומי: ${localStorageError.message}`);
+      }
+
+      // If there are errors, show them all and stop
+      if (errors.length > 0) {
+        const errorMessage = "נמצאו בעיות שמונעות שמירה:\n\n" + errors.join("\n\n");
+        alert(errorMessage);
+        return;
       }
 
       setConstants(editedData);
@@ -100,7 +129,7 @@ export function AdminPage() {
       try {
         outputData = replaceBase64WithFilename(editedData);
       } catch (replaceError) {
-        throw new Error(`שגיאה בעיבוד תמונות: ${replaceError.message}`);
+        errors.push(`❌ שגיאה בעיבוד תמונות: ${replaceError.message}`);
       }
 
       // Download constants file (desktop only)
@@ -160,15 +189,25 @@ export const ARIA = ${JSON.stringify(outputData.ARIA, null, 2)};
           document.body.removeChild(a);
           URL.revokeObjectURL(url);
         } catch (downloadError) {
-          throw new Error(`שגיאה בהורדת הקובץ: ${downloadError.message}`);
+          errors.push(`❌ שגיאה בהורדת הקובץ: ${downloadError.message}`);
         }
+      }
+
+      // If there were errors during download/processing, show them
+      if (errors.length > 0) {
+        const errorMessage = "נמצאו בעיות במהלך השמירה:\n\n" + errors.join("\n\n") + "\n\nפרטים נוספים בקונסול";
+        console.error("Save errors:", errors);
+        alert(errorMessage);
+        return;
       }
 
       alert("השינויים נשמרו בהצלחה! ✅");
       window.location.href = "/";
     } catch (error) {
       console.error("Error saving constants:", error);
-      alert(`❌ שגיאה בשמירת השינויים:\n\n${error.message}\n\nפרטים נוספים בקונסול`);
+      errors.push(`❌ שגיאה לא צפויה: ${error.message}`);
+      const errorMessage = "נמצאו בעיות במהלך השמירה:\n\n" + errors.join("\n\n") + "\n\nפרטים נוספים בקונסול";
+      alert(errorMessage);
     }
   };
 
