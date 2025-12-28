@@ -17,6 +17,7 @@ export function AdminPage() {
       }
     } catch (error) {
       console.error("Error loading constants:", error);
+      alert(`⚠️ שגיאה בטעינת הנתונים השמורים:\n\n${error.message}\n\nייטענו הגדרות ברירת המחדל`);
     }
     return CONSTANTS;
   });
@@ -77,15 +78,35 @@ export function AdminPage() {
 
   const handleSave = () => {
     try {
-      localStorage.setItem("fixmen_constants", JSON.stringify(editedData));
+      // Validate data before saving
+      if (!editedData) {
+        throw new Error("אין נתונים לשמירה");
+      }
+
+      // Try to save to localStorage
+      try {
+        localStorage.setItem("fixmen_constants", JSON.stringify(editedData));
+      } catch (localStorageError) {
+        if (localStorageError.name === "QuotaExceededError") {
+          throw new Error("אין מספיק מקום באחסון המקומי. נסה למחוק תמונות או נתונים ישנים");
+        }
+        throw new Error(`שגיאה בשמירה לאחסון מקומי: ${localStorageError.message}`);
+      }
+
       setConstants(editedData);
 
       // Replace base64 with filenames for output
-      const outputData = replaceBase64WithFilename(editedData);
+      let outputData;
+      try {
+        outputData = replaceBase64WithFilename(editedData);
+      } catch (replaceError) {
+        throw new Error(`שגיאה בעיבוד תמונות: ${replaceError.message}`);
+      }
 
       // Download constants file (desktop only)
       if (window.innerWidth >= 1024) {
-        const constantsContent = `// Brand Colors
+        try {
+          const constantsContent = `// Brand Colors
 export const COLORS = ${JSON.stringify(outputData.COLORS, null, 2)};
 
 // Contact Info
@@ -129,22 +150,25 @@ export const FOOTER = ${JSON.stringify(outputData.FOOTER, null, 2)};
 export const ARIA = ${JSON.stringify(outputData.ARIA, null, 2)};
 `;
 
-        const blob = new Blob([constantsContent], { type: "text/javascript" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "constants.js";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+          const blob = new Blob([constantsContent], { type: "text/javascript" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "constants.js";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        } catch (downloadError) {
+          throw new Error(`שגיאה בהורדת הקובץ: ${downloadError.message}`);
+        }
       }
 
       alert("השינויים נשמרו בהצלחה! ✅");
       window.location.href = "/";
     } catch (error) {
       console.error("Error saving constants:", error);
-      alert("שגיאה בשמירת השינויים ❌");
+      alert(`❌ שגיאה בשמירת השינויים:\n\n${error.message}\n\nפרטים נוספים בקונסול`);
     }
   };
 
@@ -167,16 +191,41 @@ export const ARIA = ${JSON.stringify(outputData.ARIA, null, 2)};
 
   const handleImageUpload = (file, callback) => {
     if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        alert(`❌ שגיאה: הקובץ "${file.name}" אינו תמונה תקינה.\n\nנא להעלות קבצי תמונה בלבד (JPG, PNG, GIF, וכו')`);
+        return;
+      }
+
+      // Validate file size (10MB limit)
+      const maxSize = 10 * 1024 * 1024; // 10MB
+      if (file.size > maxSize) {
+        alert(`❌ שגיאה: הקובץ "${file.name}" גדול מדי (${(file.size / 1024 / 1024).toFixed(2)}MB).\n\nגודל מקסימלי: 10MB\n\nנא לדחוס את התמונה ולנסות שוב`);
+        return;
+      }
+
       const reader = new FileReader();
-      reader.onload = (event) => {
-        const base64Data = event.target.result;
-        const filename = `./${file.name}`;
 
-        // Store the mapping
-        setImageFilenames((prev) => new Map(prev).set(base64Data, filename));
-
-        callback(base64Data);
+      reader.onerror = (error) => {
+        console.error("FileReader error:", error);
+        alert(`❌ שגיאה בקריאת הקובץ "${file.name}":\n\n${error.message || 'שגיאה לא ידועה'}\n\nנסה קובץ אחר`);
       };
+
+      reader.onload = (event) => {
+        try {
+          const base64Data = event.target.result;
+          const filename = `./${file.name}`;
+
+          // Store the mapping
+          setImageFilenames((prev) => new Map(prev).set(base64Data, filename));
+
+          callback(base64Data);
+        } catch (error) {
+          console.error("Error processing image:", error);
+          alert(`❌ שגיאה בעיבוד התמונה "${file.name}":\n\n${error.message}\n\nפרטים נוספים בקונסול`);
+        }
+      };
+
       reader.readAsDataURL(file);
     }
   };

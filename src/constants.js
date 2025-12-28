@@ -88,9 +88,15 @@ export const GALLERY = {
       images: ["./window-1-1.jpg", "./window-1-2.jpg"],
     },
     {
-      title: "תיקוני תקרה",
-      description: "תיקון תקרה לאחד נזילה ",
-      images: ["./wall-fix-1-1.jpg", "./wall-fix-1-2.jpg"],
+      title: "תקיון סיוד מקלחת,שבירות והתקנת מקלחונים",
+      description:
+        "תיקוני תקרה מנזילות, שבירת קיר בלוקים והתקנת מקלחות סטנדרט בדירה",
+      images: [
+        "./wall-fix-1-1.jpg",
+        "./wall-fix-1-2.jpg",
+        "./wall-fix-1-3.jpg",
+        "./wall-fix-1-4.jpg",
+      ],
     },
     {
       title: "חידוש דלתות וחלונות",
@@ -107,15 +113,22 @@ export const GALLERY = {
       title: "ריצוף וחיפוי",
       description: "חידוש מלא של חדרי אמבטיה ומטבח",
       images: [
-        "/gallery/project5-1.jpg",
-        "/gallery/project5-2.jpg",
-        "/gallery/project5-3.jpg",
+        "./project5-1.PNG",
+        "./project5-2.PNG",
+        "./project5-3.PNG",
+        "./project5-4.PNG",
+        "./project5-5.PNG",
       ],
     },
     {
-      title: "תיקונים ושיפוצים",
-      description: "פרויקט שיפוץ מהיר ויעיל",
-      images: ["/gallery/project6-1.jpg", "/gallery/project6-2.jpg"],
+      title: "גבס שפכטל צבע ",
+      description: "גבס הזמנה אישית לבקשת הלקוח",
+      images: [
+        "./project6-1.PNG",
+        "./project6-2.PNG",
+        "./project6-3.PNG",
+        "./project6-4.PNG",
+      ],
     },
   ],
 };
