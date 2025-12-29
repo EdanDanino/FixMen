@@ -88,9 +88,8 @@ export const GALLERY = {
       images: ["./window-1-1.jpg", "./window-1-2.jpg"],
     },
     {
-      title: "סיוד מקלחת,שבירות והתקנת מקלחונים",
-      description:
-        "תיקוני תקרה מנזילות, שבירת קיר בלוקים והתקנת מקלחות סטנדרט בדירה",
+      title: "סיוד מקלחת והתקנת מקלחונים",
+      description: "תיקוני תקרה מנזילות והתקנת מקלחות ",
       images: [
         "./wall-fix-1-1.jpg",
         "./wall-fix-1-2.jpg",
