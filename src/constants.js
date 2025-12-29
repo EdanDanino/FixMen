@@ -89,7 +89,7 @@ export const GALLERY = {
     },
     {
       title: "סיוד מקלחת והתקנת מקלחונים",
-      description: "תיקוני תקרה מנזילות והתקנת מקלחות ",
+      description: "תיקוני תקרה מנזילות והתקנת מקלחון ",
       images: [
         "./wall-fix-1-1.jpg",
         "./wall-fix-1-2.jpg",
